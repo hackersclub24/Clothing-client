@@ -34,14 +34,14 @@ export default function InstagramFeed() {
         <div className="flex items-end justify-between mb-10">
           <div>
             <p className="text-[10px] tracking-[0.4em] uppercase text-stone-400 mb-3">
-              @pacific.dust
+              @pacific_dust_
             </p>
             <p className="text-[14px] text-stone-500">
               The archive, unfolded.
             </p>
           </div>
           <a
-            href="https://instagram.com/pacific.dust"
+            href="https://www.instagram.com/pacific_dust_?igsh=MXdseDRuZHNsZGVnbA=="
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-[11px] tracking-widest uppercase text-stone-500 hover:text-stone-900 transition-colors"
@@ -56,7 +56,7 @@ export default function InstagramFeed() {
           {posts.map((post) => (
             <a
               key={post.id}
-              href="https://instagram.com/pacific.dust"
+              href="https://www.instagram.com/pacific_dust_?igsh=MXdseDRuZHNsZGVnbA=="
               target="_blank"
               rel="noopener noreferrer"
               className={`aspect-square ${post.bg} hover:opacity-75 transition-opacity block`}

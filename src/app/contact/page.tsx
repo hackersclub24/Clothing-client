@@ -17,16 +17,20 @@ export default function Contact() {
 
       <section className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-line border-b border-line">
         {[
-          { Icon:Mail,      label:"WhatsApp",  value:"+91 85958 18638",       note:"Order & support" },
-          { Icon:Phone,     label:"Call",      value:"+91 85958 18638",       note:"Mon–Sat 10–19 IST" },
-          { Icon:AtSign,   label:"Instagram", value:"@pacific.dust",        note:"Journal & campaign" },
+          { Icon:Mail,   label:"WhatsApp",  value:"+91 85958 18638",    note:"Order & support",
+            href:"https://wa.me/918595818638" },
+          { Icon:Phone,  label:"Call",      value:"+91 85958 18638",    note:"Mon–Sat 10–19 IST",
+            href:"tel:+918595818638" },
+          { Icon:AtSign, label:"Instagram", value:"@pacific_dust_",     note:"Journal & campaign",
+            href:"https://www.instagram.com/pacific_dust_?igsh=MXdseDRuZHNsZGVnbA==" },
         ].map(s => (
-          <div key={s.label} className="p-10 md:p-14">
+          <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+            className="p-10 md:p-14 block hover:bg-surface transition-colors">
             <s.Icon size={20} strokeWidth={1.25}/>
             <p className="eyebrow mt-6">{s.label}</p>
             <p className="font-display text-2xl mt-3">{s.value}</p>
             <p className="text-xs text-ink-muted mt-2">{s.note}</p>
-          </div>
+          </a>
         ))}
       </section>
 

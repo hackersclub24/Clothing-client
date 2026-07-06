@@ -42,7 +42,16 @@ export default function Footer() {
           <div className="md:col-span-1">
             <p className="eyebrow text-background/50">Social</p>
             <ul className="mt-6 space-y-3 text-sm text-background/80">
-              <li>Instagram</li>
+              <li>
+                <a
+                  href="https://www.instagram.com/pacific_dust_?igsh=MXdseDRuZHNsZGVnbA=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-underline text-background/80 hover:text-background"
+                >
+                  Instagram
+                </a>
+              </li>
               <li>WhatsApp</li>
             </ul>
           </div>
