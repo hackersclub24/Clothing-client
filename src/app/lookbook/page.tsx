@@ -21,13 +21,13 @@ export default function Lookbook() {
             <p className="mt-8 text-sm text-ink-muted max-w-sm">Photographed across Faridabad and Delhi. Autumn, twenty-twenty-six.</p>
           </div>
           <div className="md:col-span-8 relative aspect-[4/5]">
-            <Image src="/images/lookbook-1-C15adsYr.jpg.jpeg" alt="Lookbook cover" fill className="object-cover"/>
+            <Image src="/images/lookbook-1-C15adsYr.jpg.jpeg" alt="Lookbook cover" fill sizes="(max-width: 768px) 100vw, 66vw" className="object-cover"/>
           </div>
         </div>
       </section>
 
       <section className="mt-32 grid md:grid-cols-12 gap-6 px-6 md:px-10">
-        <div className="md:col-span-7 relative aspect-[16/10]"><Image src="/images/campaign-Bg10tBFF.jpg.jpeg" alt="" fill className="object-cover"/></div>
+        <div className="md:col-span-7 relative aspect-[16/10]"><Image src="/images/campaign-Bg10tBFF.jpg.jpeg" alt="" fill sizes="(max-width: 768px) 100vw, 58vw" className="object-cover"/></div>
         <div className="md:col-span-5 flex items-end">
           <div>
             <p className="eyebrow">Look 01</p>
@@ -37,7 +37,7 @@ export default function Lookbook() {
       </section>
 
       <section className="mt-32 relative aspect-[21/9] w-full">
-        <Image src="/images/hero-1-Mj2Hbnrp.jpg.jpeg" alt="" fill className="object-cover"/>
+        <Image src="/images/hero-1-Mj2Hbnrp.jpg.jpeg" alt="" fill sizes="100vw" className="object-cover"/>
       </section>
 
       <section className="py-40 px-6 md:px-10 max-w-5xl mx-auto">
@@ -48,9 +48,9 @@ export default function Lookbook() {
       </section>
 
       <section className="grid md:grid-cols-6 gap-4 md:gap-6 px-6 md:px-10 pb-32">
-        <div className="md:col-span-3 md:col-start-2 relative aspect-[3/4]"><Image src="/images/lookbook-2-DhQuyHOI.jpg.jpeg" alt="" fill className="object-cover"/></div>
-        <div className="md:col-span-2 relative aspect-square mt-24"><Image src="/images/hero-2-DkoVx-kF.jpg.jpeg" alt="" fill className="object-cover"/></div>
-        <div className="md:col-span-4 md:col-start-2 mt-16 relative aspect-[16/9]"><Image src="/images/studio-DwVjruef.jpg.jpeg" alt="" fill className="object-cover"/></div>
+        <div className="md:col-span-3 md:col-start-2 relative aspect-[3/4]"><Image src="/images/lookbook-2-DhQuyHOI.jpg.jpeg" alt="" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover"/></div>
+        <div className="md:col-span-2 relative aspect-square mt-24"><Image src="/images/hero-2-DkoVx-kF.jpg.jpeg" alt="" fill sizes="(max-width: 768px) 50vw, 33vw" className="object-cover"/></div>
+        <div className="md:col-span-4 md:col-start-2 mt-16 relative aspect-[16/9]"><Image src="/images/studio-DwVjruef.jpg.jpeg" alt="" fill sizes="(max-width: 768px) 100vw, 66vw" className="object-cover"/></div>
       </section>
 
       <section className="mt-10 grid md:grid-cols-2 gap-16 px-6 md:px-10 max-w-5xl mx-auto pb-32">

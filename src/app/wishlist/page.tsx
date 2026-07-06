@@ -27,7 +27,7 @@ export default function Wishlist() {
             <div key={p.id} className="grid grid-cols-[160px_1fr] md:grid-cols-[220px_1fr] gap-6 py-6 border-b border-line">
               <Link href={`/products/${p.slug}`}>
                 <div className="relative w-full aspect-[4/5] bg-surface overflow-hidden">
-                  {p.image && <Image src={p.image} alt={p.name} fill className="object-cover"/>}
+                  {p.image && <Image src={p.image} alt={p.name} fill sizes="(max-width: 768px) 100vw, 220px" className="object-cover"/>}
                 </div>
               </Link>
               <div className="flex flex-col justify-between">

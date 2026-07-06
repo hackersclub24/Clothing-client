@@ -62,7 +62,7 @@ export default function Checkout() {
             {items.map(item => (
               <div key={`${item.product.id}-${item.size}-${item.color}`} className="flex gap-4 py-4">
                 <div className="relative size-20 bg-background overflow-hidden">
-                  {item.product.image && <Image src={item.product.image} alt={item.product.name} fill className="object-cover"/>}
+                  {item.product.image && <Image src={item.product.image} alt={item.product.name} fill sizes="80px" className="object-cover"/>}
                   <span className="absolute -top-2 -right-2 size-5 rounded-full bg-ink text-background text-[10px] grid place-items-center">{item.qty}</span>
                 </div>
                 <div className="flex-1 min-w-0">

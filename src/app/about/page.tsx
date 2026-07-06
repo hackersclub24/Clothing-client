@@ -19,7 +19,7 @@ export default function About() {
       </section>
 
       <div className="relative h-[100vh] w-full">
-        <Image src="/images/hero-1-Mj2Hbnrp.jpg.jpeg" alt="Atelier" fill className="object-cover"/>
+        <Image src="/images/hero-1-Mj2Hbnrp.jpg.jpeg" alt="Atelier" fill sizes="100vw" className="object-cover"/>
       </div>
 
       <section className="grid md:grid-cols-2 gap-16 px-6 md:px-10 py-32 max-w-6xl">
@@ -50,9 +50,9 @@ export default function About() {
       </section>
 
       <section className="grid md:grid-cols-3 gap-4 md:gap-6 px-6 md:px-10 py-32">
-        <div className="md:col-span-2 md:row-span-2 relative aspect-[4/3]"><Image src="/images/studio-DwVjruef.jpg.jpeg" alt="" fill className="object-cover"/></div>
-        <div className="relative aspect-square"><Image src="/images/hero-2-DkoVx-kF.jpg.jpeg" alt="" fill className="object-cover"/></div>
-        <div className="relative aspect-square"><Image src="/images/campaign-Bg10tBFF.jpg.jpeg" alt="" fill className="object-cover"/></div>
+        <div className="md:col-span-2 md:row-span-2 relative aspect-[4/3]"><Image src="/images/studio-DwVjruef.jpg.jpeg" alt="" fill sizes="(max-width: 768px) 100vw, 66vw" className="object-cover"/></div>
+        <div className="relative aspect-square"><Image src="/images/hero-2-DkoVx-kF.jpg.jpeg" alt="" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover"/></div>
+        <div className="relative aspect-square"><Image src="/images/campaign-Bg10tBFF.jpg.jpeg" alt="" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover"/></div>
       </section>
 
       <section className="py-32 px-6 md:px-10 text-center max-w-4xl mx-auto">

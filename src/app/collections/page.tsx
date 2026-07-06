@@ -22,7 +22,7 @@ export default function Collections() {
         {chapters.map((ch) => (
           <section key={ch.n} className="grid md:grid-cols-2 min-h-[80vh] group">
             <div className={`relative overflow-hidden ${ch.flip ? "md:order-2" : ""}`}>
-              <Image src={ch.img} alt={ch.title} fill className="object-cover transition-transform duration-[1600ms] group-hover:scale-105"/>
+              <Image src={ch.img} alt={ch.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-[1600ms] group-hover:scale-105"/>
             </div>
             <div className="flex items-center p-10 md:p-20 bg-background">
               <div className="max-w-md">
@@ -45,7 +45,7 @@ export default function Collections() {
         <h2 className="font-display text-5xl md:text-7xl mt-6">Chapter 05 — <em className="italic font-light">Vela</em></h2>
         <p className="mt-6 text-ink-muted">Register to be first.</p>
         <div className="relative mt-16 mx-auto max-w-3xl w-full aspect-[4/3]">
-          <Image src="/images/hero-2-DkoVx-kF.jpg.jpeg" alt="" fill className="object-cover"/>
+          <Image src="/images/hero-2-DkoVx-kF.jpg.jpeg" alt="" fill sizes="(max-width: 768px) 100vw, 768px" className="object-cover"/>
         </div>
       </section>
     </main>

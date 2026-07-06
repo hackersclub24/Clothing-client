@@ -21,7 +21,7 @@ export default function Journal() {
 
       <section className="grid md:grid-cols-12 gap-10 px-6 md:px-10 py-24 border-b border-line">
         <div className="md:col-span-7 relative aspect-[16/10]">
-          <Image src="/images/studio-DwVjruef.jpg.jpeg" alt="Featured" fill className="object-cover"/>
+          <Image src="/images/studio-DwVjruef.jpg.jpeg" alt="Featured" fill sizes="(max-width: 768px) 100vw, 58vw" className="object-cover"/>
         </div>
         <article className="md:col-span-5 flex flex-col justify-end">
           <p className="eyebrow">Essay · July 2026</p>
@@ -37,7 +37,7 @@ export default function Journal() {
             <article key={a.t} className="group">
               <div className="overflow-hidden relative">
                 <div className={`relative w-full ${i%2?"aspect-[4/3]":"aspect-[16/10]"}`}>
-                  <Image src={a.img} alt={a.t} fill className="object-cover transition-transform duration-[1400ms] group-hover:scale-105"/>
+                  <Image src={a.img} alt={a.t} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-[1400ms] group-hover:scale-105"/>
                 </div>
               </div>
               <div className="mt-6 flex items-baseline justify-between">

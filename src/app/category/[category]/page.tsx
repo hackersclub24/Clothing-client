@@ -19,7 +19,7 @@ export default async function Category({
   return (
     <main>
       <section className="relative h-[70vh] min-h-[500px] pt-24">
-        <Image src="/images/campaign-Bg10tBFF.jpg.jpeg" alt="" fill className="object-cover"/>
+        <Image src="/images/campaign-Bg10tBFF.jpg.jpeg" alt="" fill sizes="100vw" className="object-cover"/>
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/40"/>
         <div className="relative z-10 h-full flex flex-col justify-end p-8 md:p-16 text-background">
           <p className="eyebrow text-background/70">The Wardrobe · {list.length} pieces</p>

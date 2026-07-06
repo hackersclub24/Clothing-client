@@ -33,7 +33,7 @@ export default function CartPage() {
             {items.map(item => (
               <div key={`${item.product.id}-${item.size}-${item.color}`} className="grid grid-cols-[140px_1fr_auto] gap-6 py-8 items-start">
                 <div className="relative w-full aspect-[4/5] bg-surface overflow-hidden">
-                  {item.product.image && <Image src={item.product.image} alt={item.product.name} fill className="object-cover"/>}
+                  {item.product.image && <Image src={item.product.image} alt={item.product.name} fill sizes="140px" className="object-cover"/>}
                 </div>
                 <div>
                   <p className="eyebrow">{item.product.category}</p>

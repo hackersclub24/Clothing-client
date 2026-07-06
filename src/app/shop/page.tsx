@@ -77,7 +77,7 @@ export default function Shop() {
                 {filtered.map(p => (
                   <Link key={p.id} href={`/products/${p.slug}`} className="grid grid-cols-[120px_1fr_auto] gap-6 py-6 items-center group">
                     <div className="relative w-full aspect-square bg-surface overflow-hidden">
-                      {p.image && <Image src={p.image} alt={p.name} fill className="object-cover"/>}
+                      {p.image && <Image src={p.image} alt={p.name} fill sizes="120px" className="object-cover"/>}
                     </div>
                     <div>
                       <p className="eyebrow">{p.category}</p>
