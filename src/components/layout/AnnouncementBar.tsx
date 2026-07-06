@@ -1,45 +1,20 @@
 "use client";
-
-import { announcementItems } from "@/data/site";
-
 export default function AnnouncementBar() {
-  // Triple-duplicate so the marquee never shows a gap
-  const items = [...announcementItems, ...announcementItems, ...announcementItems];
-
+  const items = [
+    "Complimentary delivery across Delhi NCR & Faridabad",
+    "New Arrivals — Autumn / Winter 26",
+    "Proudly made in India — Crafted with precision",
+    "Now delivering to Delhi · Noida · Gurgaon · Faridabad · Ghaziabad",
+    "Free returns within 15 days — No questions asked",
+  ];
+  const repeated = [...items, ...items];
   return (
-    <div
-      className="bg-[#1a1714] text-[#b8a98a] py-[9px] select-none"
-      style={{
-        overflow: "hidden",           // kills the scrollbar
-        WebkitOverflowScrolling: "touch",
-      }}
-    >
-      <div
-        className="flex whitespace-nowrap"
-        style={{ animation: "marquee 38s linear infinite" }}
-      >
-        {items.map((item, i) => (
-          <span
-            key={i}
-            className="shrink-0 inline-flex items-center"
-            style={{
-              fontSize: "10px",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              fontWeight: 300,
-            }}
-          >
+    <div className="bg-ink text-background/80 py-[9px] overflow-hidden select-none">
+      <div className="flex whitespace-nowrap marquee-track" style={{ gap: "3rem" }}>
+        {repeated.map((item, i) => (
+          <span key={i} className="shrink-0 text-[10px] tracking-[0.22em] uppercase font-light">
             {item}
-            {/* Decorative diamond separator */}
-            <span
-              style={{
-                margin: "0 28px",
-                color: "#6b5e4a",
-                fontSize: "8px",
-              }}
-            >
-              ◆
-            </span>
+            <span className="mx-8 text-background/30">◆</span>
           </span>
         ))}
       </div>

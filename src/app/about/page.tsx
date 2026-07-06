@@ -1,101 +1,65 @@
 import Image from "next/image";
+import Link from "next/link";
 
-export default function AboutPage() {
+export default function About() {
   return (
-    <div className="min-h-screen bg-[#f2ede0]">
-      {/* ── Hero ── */}
-      <div className="relative h-[60vh] overflow-hidden">
-        <Image
-          src="/images/studio-DwVjruef.jpg.jpeg"
-          alt="Pacific Dust atelier"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="absolute bottom-12 left-6 md:left-12">
-          <p className="text-[10px] tracking-[0.35em] uppercase text-white/70 mb-3">
-            The House
-          </p>
-          <h1
-            className="text-[clamp(3rem,7vw,6rem)] font-light text-white leading-none tracking-tight"
-            style={{ fontFamily: "var(--font-playfair)" }}
-          >
-            About
-          </h1>
-        </div>
+    <main>
+      <section className="pt-40 pb-32 px-6 md:px-10">
+        <p className="eyebrow">The House · Est. Faridabad, 2024</p>
+        <h1 className="font-display text-[13vw] md:text-[10rem] mt-10 leading-[0.88]">
+          Cloth<br/>as <em className="italic font-light">quiet</em><br/>architecture.
+        </h1>
+      </section>
+
+      <section className="grid md:grid-cols-12 gap-10 px-6 md:px-10 pb-32 items-start">
+        <p className="eyebrow md:col-span-3">Mission</p>
+        <p className="md:col-span-9 font-display text-3xl md:text-5xl leading-[1.15]">
+          We make fewer things, more slowly. Every garment we release is built to sit inside a wardrobe for a decade. <em className="italic font-light text-ink-muted">The house exists to prove that restraint can still be luxurious.</em>
+        </p>
+      </section>
+
+      <div className="relative h-[100vh] w-full">
+        <Image src="/images/hero-1-Mj2Hbnrp.jpg.jpeg" alt="Atelier" fill className="object-cover"/>
       </div>
 
-      {/* ── Philosophy ── */}
-      <section className="max-w-2xl mx-auto px-6 py-24">
-        <p className="text-[10px] tracking-[0.35em] uppercase text-[#C9A84C] mb-6">
-          Our Philosophy
-        </p>
-        <h2
-          className="text-[clamp(1.8rem,4vw,3rem)] font-light text-stone-900 leading-tight mb-8"
-          style={{ fontFamily: "var(--font-playfair)" }}
-        >
-          Fewer garments, made more slowly.
-        </h2>
-        <div className="space-y-5 text-[14px] text-stone-600 font-light leading-[1.9]">
-          <p>
-            Pacific Dust was founded in Faridabad with a single conviction — that
-            the most considered wardrobe is also the smallest one. We make
-            garments that last, cut from materials that improve with time.
-          </p>
-          <p>
-            Every piece is designed to fall away from the body. Nothing fitted.
-            Nothing loud. Each silhouette is studied in weight, drape and presence
-            before a single metre of cloth is cut.
-          </p>
-          <p>
-            We deliver exclusively across Delhi NCR and Faridabad — not because
-            we can't go further, but because we believe in knowing exactly where
-            our clothes end up.
-          </p>
+      <section className="grid md:grid-cols-2 gap-16 px-6 md:px-10 py-32 max-w-6xl">
+        <div>
+          <p className="eyebrow">Vision</p>
+          <p className="mt-6 text-ink-muted leading-relaxed">The wardrobe as a room. Every piece a wall, a floor, a beam — engineered to hold, to shelter, to age well. Clothing should behave like architecture: felt more than seen.</p>
+        </div>
+        <div>
+          <p className="eyebrow">Materials</p>
+          <p className="mt-6 text-ink-muted leading-relaxed">320 gsm brushed cotton, Japanese denim, natural fibres. Made in Faridabad with precision and care. Every material sourced for longevity, not trend.</p>
         </div>
       </section>
 
-      {/* ── Two column detail ── */}
-      <section className="max-w-screen-xl mx-auto px-6 md:px-12 pb-24 grid md:grid-cols-2 gap-16 items-center">
-        <div className="relative aspect-[3/4] overflow-hidden bg-stone-100">
-          <Image
-            src="/images/lookbook-2-DhQuyHOI.jpg.jpeg"
-            alt="Pacific Dust craftsmanship"
-            fill
-            className="object-cover"
-          />
-        </div>
-        <div className="space-y-10">
+      <section className="bg-surface py-32 px-6 md:px-10">
+        <p className="eyebrow">A short chronology</p>
+        <div className="mt-16 divide-y divide-line">
           {[
-            {
-              label: "Made in India",
-              text: "Every piece is crafted in our Faridabad atelier by a small team of specialist cutters and sewers who have worked with us since the beginning.",
-            },
-            {
-              label: "Materials",
-              text: "We use 280–340 gsm brushed cotton, Japanese denim, and Italian wool sourced from mills we have visited personally.",
-            },
-            {
-              label: "Delivery",
-              text: "We deliver to Delhi, Noida, Gurgaon, Faridabad and Ghaziabad. Order via WhatsApp — we confirm every order personally.",
-            },
-            {
-              label: "Returns",
-              text: "Free returns within 15 days. No questions asked. We collect from your door.",
-            },
-          ].map((item) => (
-            <div key={item.label}>
-              <p className="text-[9px] tracking-[0.35em] uppercase text-[#C9A84C] mb-2">
-                {item.label}
-              </p>
-              <p className="text-[13px] text-stone-600 font-light leading-relaxed">
-                {item.text}
-              </p>
+            ["2024","Founded in Faridabad. First drop — twelve pieces, sold through WhatsApp."],
+            ["2025","Opened the studio. Introduced the Monolith silhouette."],
+            ["2026","Drop 04 — Brume. Delivering across Delhi NCR and Faridabad."],
+          ].map(([y,t]) => (
+            <div key={y} className="grid grid-cols-[100px_1fr] md:grid-cols-[200px_1fr] gap-8 py-8">
+              <p className="font-display text-3xl md:text-5xl">{y}</p>
+              <p className="text-ink-muted leading-relaxed max-w-2xl md:pt-3">{t}</p>
             </div>
           ))}
         </div>
       </section>
-    </div>
+
+      <section className="grid md:grid-cols-3 gap-4 md:gap-6 px-6 md:px-10 py-32">
+        <div className="md:col-span-2 md:row-span-2 relative aspect-[4/3]"><Image src="/images/studio-DwVjruef.jpg.jpeg" alt="" fill className="object-cover"/></div>
+        <div className="relative aspect-square"><Image src="/images/hero-2-DkoVx-kF.jpg.jpeg" alt="" fill className="object-cover"/></div>
+        <div className="relative aspect-square"><Image src="/images/campaign-Bg10tBFF.jpg.jpeg" alt="" fill className="object-cover"/></div>
+      </section>
+
+      <section className="py-32 px-6 md:px-10 text-center max-w-4xl mx-auto">
+        <p className="eyebrow">Founders</p>
+        <p className="font-display text-3xl md:text-5xl mt-8 italic font-light leading-tight">"We do not want to dress everyone. We want to dress a few people, properly, for a long time."</p>
+        <p className="mt-6 text-sm text-ink-muted tracking-[0.18em] uppercase">— Pacific Dust, Faridabad</p>
+      </section>
+    </main>
   );
 }

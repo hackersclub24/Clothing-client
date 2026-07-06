@@ -1,132 +1,53 @@
 import Image from "next/image";
 import Link from "next/link";
-import { newArrivals, bestSellers } from "@/data/products";
 
-const collections = [
-  {
-    title: "Autumn / Winter 26",
-    subtitle: "Twelve pieces. Stone, charcoal, bone.",
-    image: "/images/hero-1-Mj2Hbnrp.jpg.jpeg",
-    href: "/collections/aw26",
-    count: "12 Pieces",
-  },
-  {
-    title: "Lookbook I",
-    subtitle: "The first chapter. Light and structure.",
-    image: "/images/lookbook-1-C15adsYr.jpg.jpeg",
-    href: "/collections/lookbook-i",
-    count: "8 Pieces",
-  },
-  {
-    title: "Lookbook II",
-    subtitle: "Volume and restraint in equal measure.",
-    image: "/images/lookbook-2-DhQuyHOI.jpg.jpeg",
-    href: "/collections/lookbook-ii",
-    count: "10 Pieces",
-  },
-  {
-    title: "Campaign",
-    subtitle: "Worn as intended. Shot at the atelier.",
-    image: "/images/campaign-Bg10tBFF.jpg.jpeg",
-    href: "/collections/campaign",
-    count: "6 Pieces",
-  },
+const chapters = [
+  { n:"04", title:"Brume",   season:"Autumn / Winter 26", desc:"A study in fog and weight. Undyed cashmere, dense wool.", img:"/images/hero-1-Mj2Hbnrp.jpg.jpeg", flip:false },
+  { n:"03", title:"Terraza", season:"Spring / Summer 26",  desc:"Cotton, air, and long shadow. Cut wider, worn lighter.",  img:"/images/campaign-Bg10tBFF.jpg.jpeg", flip:true },
+  { n:"02", title:"Ossa",    season:"Autumn / Winter 25", desc:"Bone and structure. Tailoring reduced to its geometry.", img:"/images/lookbook-1-C15adsYr.jpg.jpeg", flip:false },
+  { n:"01", title:"Alba",    season:"Spring / Summer 25",  desc:"The first chapter. Whites, salt, first hours of light.", img:"/images/studio-DwVjruef.jpg.jpeg", flip:true },
 ];
 
-const allProducts = [
-  ...newArrivals,
-  ...bestSellers.filter((p) => !newArrivals.find((n) => n.id === p.id)),
-];
-
-export default function CollectionsPage() {
+export default function Collections() {
   return (
-    <div className="min-h-screen bg-[#f2ede0]">
-      {/* ── Page header ── */}
-      <div className="pt-36 pb-12 px-6 md:px-12 max-w-screen-xl mx-auto">
-        <p className="text-[10px] tracking-[0.35em] uppercase text-stone-400 mb-3">
-          Pacific Dust
-        </p>
-        <h1
-          className="text-[clamp(2.5rem,6vw,5rem)] font-light text-stone-900 leading-none tracking-tight"
-          style={{ fontFamily: "var(--font-playfair)" }}
-        >
-          Collections
+    <main>
+      <section className="pt-40 pb-24 px-6 md:px-10 border-b border-line">
+        <p className="eyebrow">The House · Four chapters a year</p>
+        <h1 className="font-display text-6xl md:text-[9rem] leading-[0.9] mt-8 max-w-5xl">
+          Collections<br/><em className="italic font-light">as chapters</em>,<br/>not seasons.
         </h1>
-        <div className="w-12 h-px bg-stone-300 mt-6" />
+      </section>
+
+      <div className="divide-y divide-line">
+        {chapters.map((ch) => (
+          <section key={ch.n} className="grid md:grid-cols-2 min-h-[80vh] group">
+            <div className={`relative overflow-hidden ${ch.flip ? "md:order-2" : ""}`}>
+              <Image src={ch.img} alt={ch.title} fill className="object-cover transition-transform duration-[1600ms] group-hover:scale-105"/>
+            </div>
+            <div className="flex items-center p-10 md:p-20 bg-background">
+              <div className="max-w-md">
+                <p className="eyebrow">Chapter N° {ch.n} · {ch.season}</p>
+                <h2 className="font-display text-6xl md:text-8xl mt-6 italic font-light">{ch.title}</h2>
+                <p className="mt-8 text-ink-muted leading-relaxed">{ch.desc}</p>
+                <div className="mt-10 flex gap-4">
+                  <Link href="/shop" className="btn-ink">Shop the chapter</Link>
+                  <Link href="/lookbook" className="btn-ghost">Lookbook</Link>
+                </div>
+                <p className="mt-8 text-xs text-ink-muted">12 pieces · Made in India</p>
+              </div>
+            </div>
+          </section>
+        ))}
       </div>
 
-      {/* ── Collection grid ── */}
-      <section className="px-6 md:px-12 max-w-screen-xl mx-auto mb-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {collections.map((col) => (
-            <Link
-              key={col.title}
-              href={col.href}
-              className="group relative overflow-hidden aspect-[4/3] block bg-stone-100"
-            >
-              <Image
-                src={col.image}
-                alt={col.title}
-                fill
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-              />
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-500" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <p className="text-[9px] tracking-[0.3em] uppercase text-white/70 mb-2">
-                  {col.count}
-                </p>
-                <h2 className="text-[1.6rem] font-light text-white leading-tight tracking-tight"
-                  style={{ fontFamily: "var(--font-playfair)" }}>
-                  {col.title}
-                </h2>
-                <p className="text-[12px] text-white/70 font-light mt-1">
-                  {col.subtitle}
-                </p>
-              </div>
-            </Link>
-          ))}
+      <section className="py-32 px-6 md:px-10 bg-surface text-center">
+        <p className="eyebrow">Coming Winter 27</p>
+        <h2 className="font-display text-5xl md:text-7xl mt-6">Chapter 05 — <em className="italic font-light">Vela</em></h2>
+        <p className="mt-6 text-ink-muted">Register to be first.</p>
+        <div className="relative mt-16 mx-auto max-w-3xl w-full aspect-[4/3]">
+          <Image src="/images/hero-2-DkoVx-kF.jpg.jpeg" alt="" fill className="object-cover"/>
         </div>
       </section>
-
-      {/* ── All products ── */}
-      <section className="px-6 md:px-12 max-w-screen-xl mx-auto pb-24">
-        <div className="flex items-center justify-between mb-10">
-          <h2 className="text-[11px] tracking-[0.3em] uppercase text-stone-500">
-            All Pieces — {allProducts.length} Items
-          </h2>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {allProducts.map((product) => (
-            <Link
-              key={product.id}
-              href={`/products/${product.slug}`}
-              className="group flex flex-col"
-            >
-              <div className="relative aspect-[3/4] overflow-hidden bg-stone-100 mb-3.5">
-                {product.image && (
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                  />
-                )}
-              </div>
-              <p className="text-[10px] tracking-[0.3em] uppercase text-stone-400">
-                {product.category}
-              </p>
-              <p className="text-[13px] text-stone-900 mt-1">{product.name}</p>
-              <p className="text-[12px] text-stone-400 mt-0.5">
-                {product.colors.join(" · ")}
-              </p>
-              <p className="text-[13px] text-stone-900 mt-1.5">
-                ₹{product.price.toLocaleString("en-IN")}
-              </p>
-            </Link>
-          ))}
-        </div>
-      </section>
-    </div>
+    </main>
   );
 }

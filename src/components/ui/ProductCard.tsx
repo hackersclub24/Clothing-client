@@ -3,118 +3,76 @@
 import type { Product } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import { Plus, Check } from "lucide-react";
-import { useState } from "react";
-import { useCart } from "@/context/CartContext";
+import { Plus } from "lucide-react";
+import { useQuickAdd } from "@/context/QuickAddContext";
 
 interface ProductCardProps {
   product: Product;
 }
 
-const SIZES = ["XS", "S", "M", "L", "XL"];
-
 export default function ProductCard({ product }: ProductCardProps) {
-  const { addItem } = useCart();
-  const [added, setAdded]       = useState(false);
-  const [size, setSize]         = useState("M");
-  const [showSizes, setShowSizes] = useState(false);
-
-  const handleAdd = (e: React.MouseEvent) => {
-    e.preventDefault();
-    addItem(product, size, product.colors[0] ?? "Default");
-    setAdded(true);
-    setShowSizes(false);
-    setTimeout(() => setAdded(false), 2000);
-  };
+  const { open } = useQuickAdd();
 
   return (
     <article className="group relative flex flex-col">
-      {/* ── Image ───────────────────────────────────────────── */}
-      <Link
-        href={`/products/${product.slug}`}
-        className="relative block aspect-[3/4] overflow-hidden bg-stone-100"
-        aria-label={`View ${product.name}`}
-      >
-        {product.image ? (
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 50vw, 25vw"
-            className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-          />
-        ) : (
-          <div className="w-full h-full bg-stone-100 flex items-center justify-center">
-            <span className="text-[10px] tracking-widest uppercase text-stone-400">
-              {product.category}
-            </span>
-          </div>
-        )}
 
-        {/* ── Quick add overlay ─────────────────────────────── */}
-        <div className="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out bg-white">
-          {/* Size picker — shows when hovering */}
-          {showSizes && !added && (
-            <div className="flex border-b border-stone-100">
-              {SIZES.map((s) => (
-                <button
-                  key={s}
-                  onClick={(e) => { e.preventDefault(); setSize(s); }}
-                  className={`flex-1 py-2 text-[9px] tracking-[0.2em] uppercase transition-colors ${
-                    size === s
-                      ? "bg-stone-900 text-white"
-                      : "text-stone-500 hover:bg-stone-50"
-                  }`}
-                >
-                  {s}
-                </button>
-              ))}
+      {/* ── Image ── */}
+      <div className="relative aspect-[3/4] overflow-hidden bg-surface product-hover">
+        <Link href={`/products/${product.slug}`} aria-label={`View ${product.name}`}>
+          {product.image ? (
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              sizes="(max-width: 768px) 50vw, 25vw"
+              className="object-cover object-center"
+            />
+          ) : (
+            <div className="w-full h-full bg-surface flex items-center justify-center">
+              <span className="eyebrow">{product.category}</span>
             </div>
           )}
+        </Link>
 
+        {/* Wishlist icon top-right */}
+        <button
+          aria-label="Save to wishlist"
+          className="absolute top-3 right-3 size-9 grid place-items-center rounded-full bg-background/70 backdrop-blur opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-background"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+
+        {/* Quick add — slides up on hover */}
+        <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
           <button
-            onClick={showSizes ? handleAdd : (e) => { e.preventDefault(); setShowSizes(true); }}
-            className={`w-full py-3.5 text-[10px] tracking-[0.2em] uppercase flex items-center justify-center gap-2 transition-colors ${
-              added
-                ? "bg-stone-900 text-white"
-                : "text-stone-900 hover:bg-stone-900 hover:text-white"
-            }`}
+            onClick={(e) => { e.preventDefault(); open(product); }}
+            className="w-full py-3.5 bg-background/90 backdrop-blur-sm hover:bg-ink hover:text-background text-[11px] tracking-[0.2em] uppercase flex items-center justify-center gap-2 transition-all duration-300"
           >
-            {added ? (
-              <><Check size={12} strokeWidth={2} /> Added</>
-            ) : showSizes ? (
-              <><Plus size={12} strokeWidth={1.5} /> Add — Size {size}</>
-            ) : (
-              <><Plus size={12} strokeWidth={1.5} /> Quick add</>
-            )}
+            <Plus size={12} strokeWidth={1.5} />
+            Quick add
           </button>
         </div>
-      </Link>
+      </div>
 
-      {/* ── Info ─────────────────────────────────────────────── */}
-      <div className="mt-3.5 flex flex-col gap-0.5">
-        <p className="text-[10px] tracking-[0.3em] uppercase text-stone-400">
-          {product.category}
-        </p>
+      {/* ── Info ── */}
+      <div className="mt-4 flex flex-col gap-1">
+        <p className="eyebrow">{product.category}</p>
         <Link
           href={`/products/${product.slug}`}
-          className="text-[13px] text-stone-900 hover:text-stone-500 transition-colors mt-1"
+          className="font-display text-lg mt-1 leading-tight hover:opacity-60 transition-opacity"
         >
           {product.name}
         </Link>
-        <p className="text-[12px] text-stone-400 tracking-wide">
-          {product.colors.join(" · ")}
-        </p>
-        <div className="flex items-center justify-between mt-1.5">
-          <p className="text-[13px] text-stone-900">
-            ₹{product.price.toLocaleString("en-IN")}
-          </p>
-          {/* Direct add to bag button below the card */}
+        <p className="text-xs text-ink-muted mt-0.5">{product.colors.join(" · ")}</p>
+        <div className="flex items-center justify-between mt-2">
+          <p className="text-sm">₹{product.price.toLocaleString("en-IN")}</p>
           <button
-            onClick={(e) => { e.preventDefault(); addItem(product, size); setAdded(true); setTimeout(() => setAdded(false), 2000); }}
-            className="text-[9px] tracking-[0.2em] uppercase text-stone-400 hover:text-stone-900 transition-colors"
+            onClick={() => open(product)}
+            className="text-[10px] tracking-[0.18em] uppercase text-ink-muted hover:text-ink transition-colors link-underline"
           >
-            {added ? "✓ Added" : "+ Add"}
+            Add to bag
           </button>
         </div>
       </div>

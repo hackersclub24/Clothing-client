@@ -1,60 +1,66 @@
 import Image from "next/image";
+import Link from "next/link";
 
-const shots = [
-  { image: "/images/lookbook-1-C15adsYr.jpg.jpeg", title: "Chapter I", caption: "Morning light, Milan studio." },
-  { image: "/images/lookbook-2-DhQuyHOI.jpg.jpeg", title: "Chapter II", caption: "Volume and restraint." },
-  { image: "/images/hero-1-Mj2Hbnrp.jpg.jpeg",     title: "Chapter III", caption: "The oversized silhouette." },
-  { image: "/images/hero-2-DkoVx-kF.jpg.jpeg",     title: "Chapter IV",  caption: "Structure without effort." },
-  { image: "/images/campaign-Bg10tBFF.jpg.jpeg",    title: "Chapter V",  caption: "Worn as intended." },
-  { image: "/images/studio-DwVjruef.jpg.jpeg",      title: "Chapter VI", caption: "The atelier, Faridabad." },
+const images = [
+  { src:"/images/lookbook-1-C15adsYr.jpg.jpeg", aspect:"aspect-[4/5]", caption:"Look 01 — Colonnade" },
+  { src:"/images/campaign-Bg10tBFF.jpg.jpeg",   aspect:"aspect-[16/10]", caption:"Look 02 — Campaign" },
+  { src:"/images/hero-1-Mj2Hbnrp.jpg.jpeg",    aspect:"aspect-[4/5]", caption:"Look 03 — Editorial" },
+  { src:"/images/hero-2-DkoVx-kF.jpg.jpeg",    aspect:"aspect-[4/3]", caption:"Look 04 — Studio" },
+  { src:"/images/lookbook-2-DhQuyHOI.jpg.jpeg", aspect:"aspect-[3/4]", caption:"Look 05 — Detail" },
+  { src:"/images/studio-DwVjruef.jpg.jpeg",     aspect:"aspect-[16/9]", caption:"Look 06 — Atelier" },
 ];
 
-export default function LookbookPage() {
+export default function Lookbook() {
   return (
-    <div className="min-h-screen bg-[#f2ede0]">
-      {/* ── Header ── */}
-      <div className="pt-36 pb-14 px-6 md:px-12 max-w-screen-xl mx-auto text-center">
-        <p className="text-[10px] tracking-[0.35em] uppercase text-stone-400 mb-4">
-          AW — Twenty-Six
-        </p>
-        <h1
-          className="text-[clamp(3rem,8vw,7rem)] font-light text-stone-900 leading-none tracking-tight italic"
-          style={{ fontFamily: "var(--font-playfair)" }}
-        >
-          Lookbook
-        </h1>
-        <p className="text-[13px] text-stone-500 font-light mt-5 max-w-md mx-auto leading-relaxed">
-          Twelve pieces. Shot at the Pacific Dust atelier in Faridabad.
-          Every silhouette engineered to fall away from the body.
-        </p>
-      </div>
-
-      {/* ── Masonry-style grid ── */}
-      <div className="px-6 md:px-12 max-w-screen-xl mx-auto pb-24">
-        <div className="columns-1 md:columns-2 gap-5 space-y-5">
-          {shots.map((shot, i) => (
-            <div key={i} className="break-inside-avoid relative overflow-hidden group">
-              <div className={`relative w-full ${i % 3 === 0 ? "aspect-[3/4]" : "aspect-[4/3]"} bg-stone-100`}>
-                <Image
-                  src={shot.image}
-                  alt={shot.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-400 bg-gradient-to-t from-black/50">
-                  <p className="text-[9px] tracking-[0.3em] uppercase text-white/70 mb-1">
-                    {shot.title}
-                  </p>
-                  <p className="text-[13px] text-white font-light">
-                    {shot.caption}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
+    <main>
+      <section className="pt-32 px-6 md:px-10">
+        <div className="grid md:grid-cols-12 gap-6 items-end">
+          <div className="md:col-span-4">
+            <p className="eyebrow">Issue N° 04</p>
+            <h1 className="font-display text-6xl md:text-9xl mt-6 leading-[0.88]">Brume<br/><em className="italic font-light">— a lookbook.</em></h1>
+            <p className="mt-8 text-sm text-ink-muted max-w-sm">Photographed across Faridabad and Delhi. Autumn, twenty-twenty-six.</p>
+          </div>
+          <div className="md:col-span-8 relative aspect-[4/5]">
+            <Image src="/images/lookbook-1-C15adsYr.jpg.jpeg" alt="Lookbook cover" fill className="object-cover"/>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      <section className="mt-32 grid md:grid-cols-12 gap-6 px-6 md:px-10">
+        <div className="md:col-span-7 relative aspect-[16/10]"><Image src="/images/campaign-Bg10tBFF.jpg.jpeg" alt="" fill className="object-cover"/></div>
+        <div className="md:col-span-5 flex items-end">
+          <div>
+            <p className="eyebrow">Look 01</p>
+            <p className="font-display text-3xl md:text-4xl mt-4 italic font-light">"The line the body draws when the room is quiet."</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-32 relative aspect-[21/9] w-full">
+        <Image src="/images/hero-1-Mj2Hbnrp.jpg.jpeg" alt="" fill className="object-cover"/>
+      </section>
+
+      <section className="py-40 px-6 md:px-10 max-w-5xl mx-auto">
+        <p className="eyebrow">Editor's Note</p>
+        <p className="font-display text-3xl md:text-5xl mt-8 leading-[1.15]">
+          <em className="italic font-light">Brume</em> is Hindi for the quiet that settles over Delhi in October — thick, still, weightless. This chapter dresses the body the way that silence dresses a room.
+        </p>
+      </section>
+
+      <section className="grid md:grid-cols-6 gap-4 md:gap-6 px-6 md:px-10 pb-32">
+        <div className="md:col-span-3 md:col-start-2 relative aspect-[3/4]"><Image src="/images/lookbook-2-DhQuyHOI.jpg.jpeg" alt="" fill className="object-cover"/></div>
+        <div className="md:col-span-2 relative aspect-square mt-24"><Image src="/images/hero-2-DkoVx-kF.jpg.jpeg" alt="" fill className="object-cover"/></div>
+        <div className="md:col-span-4 md:col-start-2 mt-16 relative aspect-[16/9]"><Image src="/images/studio-DwVjruef.jpg.jpeg" alt="" fill className="object-cover"/></div>
+      </section>
+
+      <section className="mt-10 grid md:grid-cols-2 gap-16 px-6 md:px-10 max-w-5xl mx-auto pb-32">
+        <p className="eyebrow">Credits</p>
+        <div className="text-sm text-ink-muted space-y-3 leading-relaxed">
+          <p>Creative direction · Studio Pacific Dust</p>
+          <p>Photography · Team Pacific Dust</p>
+          <p>Location · Faridabad & Delhi, September 2026</p>
+        </div>
+      </section>
+    </main>
   );
 }

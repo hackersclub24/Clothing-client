@@ -1,65 +1,100 @@
-import { newArrivals, trending, bestSellers } from "@/data/products";
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { LayoutGrid, Rows3, SlidersHorizontal, X } from "lucide-react";
 import ProductCard from "@/components/ui/ProductCard";
+import { newArrivals, trending } from "@/data/products";
 
-const categories = ["All", "Knitwear", "Outerwear", "Trousers", "Accessories"];
+const all = [...newArrivals, ...trending.filter(p => !newArrivals.find(n => n.id === p.id))];
+const CATS = ["All","Outerwear","Knitwear","Trousers","Accessories"];
+const SIZES = ["XS","S","M","L","XL"];
 
-const allProducts = [
-  ...newArrivals,
-  ...trending.filter((p) => !newArrivals.find((n) => n.id === p.id)),
-  ...bestSellers.filter(
-    (p) =>
-      !newArrivals.find((n) => n.id === p.id) &&
-      !trending.find((t) => t.id === p.id)
-  ),
-];
+export default function Shop() {
+  const [view, setView] = useState<"grid"|"list">("grid");
+  const [open, setOpen] = useState(true);
+  const [cat, setCat] = useState("All");
+  const filtered = cat === "All" ? all : all.filter(p => p.category === cat);
 
-export default function ShopPage() {
   return (
-    <div className="min-h-screen bg-[#f2ede0]">
-      {/* ── Header ── */}
-      <div className="pt-36 pb-10 px-6 md:px-12 max-w-screen-xl mx-auto border-b border-stone-200/60">
-        <div className="flex items-end justify-between">
-          <div>
-            <p className="text-[10px] tracking-[0.35em] uppercase text-stone-400 mb-2">
-              Pacific Dust
-            </p>
-            <h1
-              className="text-[clamp(2rem,5vw,4rem)] font-light text-stone-900 leading-none tracking-tight"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Shop
-            </h1>
+    <main className="pt-40">
+      <header className="px-6 md:px-10 pb-16 border-b border-line">
+        <div className="grid md:grid-cols-12 gap-8 items-end">
+          <div className="md:col-span-8">
+            <p className="eyebrow">All Pieces — {filtered.length}</p>
+            <h1 className="font-display text-6xl md:text-9xl mt-6 leading-[0.9]">The <em className="italic font-light">shop</em>.</h1>
           </div>
-          <p className="text-[11px] tracking-[0.2em] uppercase text-stone-400 pb-2">
-            {allProducts.length} Pieces
-          </p>
+          <p className="md:col-span-4 text-ink-muted text-sm leading-relaxed">A living archive of every piece we currently make. Ordered by quiet, weight, and season.</p>
         </div>
+      </header>
 
-        {/* Category filter */}
-        <div className="flex gap-6 mt-8 overflow-x-auto no-scrollbar">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              className={`text-[10px] tracking-[0.25em] uppercase shrink-0 pb-2 border-b transition-colors ${
-                cat === "All"
-                  ? "border-stone-900 text-stone-900"
-                  : "border-transparent text-stone-400 hover:text-stone-700"
-              }`}
-            >
-              {cat}
+      <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr]">
+        <aside className={`lg:sticky lg:top-32 lg:h-[calc(100vh-8rem)] lg:overflow-y-auto px-6 md:px-10 py-10 border-r border-line ${open ? "" : "hidden lg:block"}`}>
+          <div className="flex items-center justify-between mb-8">
+            <p className="eyebrow">Refine</p>
+            <button className="lg:hidden" onClick={() => setOpen(false)}><X size={16}/></button>
+          </div>
+          <details open className="py-6 border-t border-line group">
+            <summary className="flex items-center justify-between cursor-pointer list-none text-[13px]">Category <span className="text-ink-muted group-open:rotate-45 transition-transform">+</span></summary>
+            <ul className="mt-4 space-y-2.5">
+              {CATS.map(o => (
+                <li key={o}><button onClick={() => setCat(o)} className={`text-sm transition-colors ${cat===o?"text-ink font-medium":"text-ink-muted hover:text-ink"}`}>{o}</button></li>
+              ))}
+            </ul>
+          </details>
+          <details open className="py-6 border-t border-line group">
+            <summary className="flex items-center justify-between cursor-pointer list-none text-[13px]">Size <span className="text-ink-muted group-open:rotate-45 transition-transform">+</span></summary>
+            <ul className="mt-4 space-y-2.5">
+              {SIZES.map(s => <li key={s}><label className="flex items-center gap-3 text-sm text-ink-muted hover:text-ink cursor-pointer"><span className="size-3.5 border border-line rounded-sm"/>{s}</label></li>)}
+            </ul>
+          </details>
+        </aside>
+
+        <div>
+          <div className="sticky top-[var(--announcement-h)] z-30 glass-nav flex items-center justify-between px-6 md:px-10 py-4 border-b border-line">
+            <button onClick={() => setOpen(v=>!v)} className="lg:hidden flex items-center gap-2 text-sm">
+              <SlidersHorizontal size={16}/> Filter
             </button>
-          ))}
-        </div>
-      </div>
+            <p className="text-xs text-ink-muted hidden lg:block">Showing {filtered.length} pieces</p>
+            <div className="flex items-center gap-4">
+              <select className="bg-transparent text-xs tracking-[0.18em] uppercase outline-none cursor-pointer">
+                <option>Newest</option><option>Price · low</option><option>Price · high</option>
+              </select>
+              <div className="hidden md:flex items-center gap-1 border border-line rounded-full p-1">
+                <button onClick={() => setView("grid")} className={`size-8 grid place-items-center rounded-full ${view==="grid"?"bg-ink text-background":""}`}><LayoutGrid size={14}/></button>
+                <button onClick={() => setView("list")} className={`size-8 grid place-items-center rounded-full ${view==="list"?"bg-ink text-background":""}`}><Rows3 size={14}/></button>
+              </div>
+            </div>
+          </div>
 
-      {/* ── Grid ── */}
-      <div className="px-6 md:px-12 max-w-screen-xl mx-auto py-14">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-14">
-          {allProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          <div className="px-6 md:px-10 py-16">
+            {view === "grid" ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 md:gap-x-8 gap-y-16">
+                {filtered.map(p => <ProductCard key={p.id} product={p}/>)}
+              </div>
+            ) : (
+              <div className="divide-y divide-line">
+                {filtered.map(p => (
+                  <Link key={p.id} href={`/products/${p.slug}`} className="grid grid-cols-[120px_1fr_auto] gap-6 py-6 items-center group">
+                    <div className="relative w-full aspect-square bg-surface overflow-hidden">
+                      {p.image && <Image src={p.image} alt={p.name} fill className="object-cover"/>}
+                    </div>
+                    <div>
+                      <p className="eyebrow">{p.category}</p>
+                      <p className="font-display text-2xl mt-2">{p.name}</p>
+                      <p className="text-xs text-ink-muted mt-1">{p.colors.join(" · ")}</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm">₹{p.price.toLocaleString("en-IN")}</div>
+                      <span className="mt-3 inline-block text-[11px] tracking-[0.18em] uppercase link-underline">View →</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
