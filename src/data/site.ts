@@ -1,10 +1,12 @@
 import type { NavItem, Testimonial, Chapter } from "@/types";
 
 export const announcementItems = [
-  "Complimentary shipping over €300",
+  "Complimentary delivery across Delhi NCR & Faridabad",
   "New Arrivals — Autumn / Winter 26",
-  "Atelier Milano now open by appointment",
-  "Handcrafted in Portugal & Italy",
+  "Proudly made in India — Crafted with precision",
+  "Now delivering to Delhi · Noida · Gurgaon · Faridabad · Ghaziabad",
+  "Free returns within 15 days — No questions asked",
+  "Book a private styling session — Delhi NCR only",
 ];
 
 // Nav matches the screenshot exactly: Shop | Collections | Lookbook | Journal | About

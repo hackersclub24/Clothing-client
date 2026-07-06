@@ -6,12 +6,14 @@ import { Menu, X, Search, User, Heart, ShoppingBag } from "lucide-react";
 import { navItems } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { useCart } from "@/context/CartContext";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled]  = useState(false);
+  const { totalItems, openCart }  = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -116,8 +118,9 @@ export default function Header() {
               </button>
             ))}
 
-            {/* Bag with count badge */}
+            {/* Bag — opens cart drawer, shows real count */}
             <button
+              onClick={openCart}
               aria-label="Shopping bag"
               className={cn(
                 "relative transition-colors duration-300",
@@ -127,9 +130,11 @@ export default function Header() {
               )}
             >
               <ShoppingBag size={17} strokeWidth={1.5} />
-              <span className="absolute -top-1.5 -right-2 w-[17px] h-[17px] bg-stone-900 text-white text-[8px] rounded-full flex items-center justify-center leading-none font-medium">
-                2
-              </span>
+              {totalItems > 0 && (
+                <span className="absolute -top-1.5 -right-2 w-[17px] h-[17px] bg-stone-900 text-white text-[8px] rounded-full flex items-center justify-center leading-none font-medium">
+                  {totalItems > 99 ? "99+" : totalItems}
+                </span>
+              )}
             </button>
           </motion.div>
         </div>

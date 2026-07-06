@@ -6,6 +6,8 @@ import "./globals.css";
 import AnnouncementBar from "@/components/layout/AnnouncementBar";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { CartProvider } from "@/context/CartContext";
+import CartDrawer from "@/components/ui/CartDrawer";
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -24,11 +26,11 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Pacific Dust — Quiet Luxury, Architecturally Cut",
   description:
-    "Fewer garments, made more slowly. Outerwear, knitwear and trousers cut in ateliers across Northern Italy and Portugal.",
+    "Fewer garments, made more slowly. Crafted in India for Delhi NCR & Faridabad.",
   openGraph: {
     title: "Pacific Dust — Quiet Luxury, Architecturally Cut",
     description:
-      "Fewer garments, made more slowly. Outerwear, knitwear and trousers cut in ateliers across Northern Italy and Portugal.",
+      "Fewer garments, made more slowly. Crafted in India for Delhi NCR & Faridabad.",
     type: "website",
   },
 };
@@ -44,12 +46,17 @@ export default function RootLayout({
           src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"
           strategy="afterInteractive"
         />
-        <div className="sticky top-0 z-[60]">
-          <AnnouncementBar />
-        </div>
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {/* CartProvider wraps everything so all components access cart state */}
+        <CartProvider>
+          <div className="sticky top-0 z-[60]">
+            <AnnouncementBar />
+          </div>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          {/* Cart drawer renders at root level — above everything */}
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );
