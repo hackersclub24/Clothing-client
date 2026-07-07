@@ -9,7 +9,6 @@ import ShopTheLook from "@/components/sections/ShopTheLook";
 import Trending from "@/components/sections/Trending";
 import Chapters from "@/components/sections/Chapters";
 import Testimonials from "@/components/sections/Testimonials";
-import InstagramFeed from "@/components/sections/InstagramFeed";
 import Newsletter from "@/components/sections/Newsletter";
 
 export default function HomePage() {
@@ -26,7 +25,6 @@ export default function HomePage() {
       <Trending />
       <Chapters />
       <Testimonials />
-      <InstagramFeed />
       <Newsletter />
     </>
   );

@@ -22,7 +22,6 @@ export default function ProductDetail({ product }: { product: Product }) {
   const handleAdd = () => {
     for (let i = 0; i < qty; i++) addItem(product, size, color);
     setAdded(true);
-    openCart();
     setTimeout(() => setAdded(false), 2500);
   };
 

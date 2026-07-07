@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, Search, User, Heart, ShoppingBag } from "lucide-react";
+import { Menu, X, Search, Heart, ShoppingBag } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,6 @@ const NAV = [
   { href: "/shop",        label: "Shop" },
   { href: "/collections", label: "Collections" },
   { href: "/lookbook",    label: "Lookbook" },
-  { href: "/journal",     label: "Journal" },
   { href: "/about",       label: "About" },
 ];
 
@@ -39,37 +38,58 @@ export default function Header() {
       transition={{ duration: 0.9, ease: EASE }}
     >
       <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center px-6 md:px-10 py-5">
+
         {/* Left nav */}
         <nav className="hidden md:flex items-center gap-8">
           {NAV.map((l) => (
-            <Link key={l.href} href={l.href} className="link-underline text-[13px] text-ink hover:text-ink transition-colors">
+            <Link
+              key={l.href}
+              href={l.href}
+              className="link-underline text-[13px] text-ink hover:text-ink transition-colors"
+            >
               {l.label}
             </Link>
           ))}
         </nav>
 
         {/* Mobile hamburger */}
-        <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-1.5 -ml-1.5 text-ink" aria-label="Menu">
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden p-1.5 -ml-1.5 text-ink"
+          aria-label="Menu"
+        >
           {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
 
-        {/* Logo */}
-        <Link href="/" className="justify-self-center font-display text-xl md:text-2xl tracking-[-0.02em]">
+        {/* Logo — always centred */}
+        <Link
+          href="/"
+          className="justify-self-center font-display text-xl md:text-2xl tracking-[-0.02em]"
+        >
           Pacific Dust
         </Link>
 
-        {/* Right icons */}
+        {/* Right icons — search, wishlist, cart only */}
         <div className="justify-self-end flex items-center gap-5">
-          <Link href="/search" aria-label="Search" className="hover:opacity-60 transition-opacity hidden md:block">
+          <Link
+            href="/search"
+            aria-label="Search"
+            className="hover:opacity-60 transition-opacity hidden md:block"
+          >
             <Search size={18} strokeWidth={1.25} />
           </Link>
-          <Link href="/account" aria-label="Account" className="hover:opacity-60 transition-opacity hidden md:block">
-            <User size={18} strokeWidth={1.25} />
-          </Link>
-          <Link href="/wishlist" aria-label="Wishlist" className="hover:opacity-60 transition-opacity hidden md:block">
+          <Link
+            href="/wishlist"
+            aria-label="Wishlist"
+            className="hover:opacity-60 transition-opacity hidden md:block"
+          >
             <Heart size={18} strokeWidth={1.25} />
           </Link>
-          <button onClick={openCart} aria-label="Cart" className="relative hover:opacity-60 transition-opacity">
+          <button
+            onClick={openCart}
+            aria-label="Cart"
+            className="relative hover:opacity-60 transition-opacity"
+          >
             <ShoppingBag size={18} strokeWidth={1.25} />
             {totalItems > 0 && (
               <span className="absolute -top-1.5 -right-2 size-4 rounded-full bg-ink text-background text-[9px] grid place-items-center font-medium">
@@ -92,15 +112,19 @@ export default function Header() {
             style={{ overflow: "hidden" }}
           >
             <nav className="px-6 py-6 flex flex-col gap-5">
-              {[...NAV,
+              {[
+                ...NAV,
                 { href: "/search",  label: "Search" },
-                { href: "/account", label: "Account" },
                 { href: "/wishlist", label: "Wishlist" },
                 { href: "/contact", label: "Contact" },
                 { href: "/faq",     label: "FAQ" },
               ].map((l) => (
-                <Link key={l.href} href={l.href} onClick={() => setMenuOpen(false)}
-                  className="eyebrow text-ink hover:text-ink/60 transition-colors">
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="eyebrow text-ink hover:text-ink/60 transition-colors"
+                >
                   {l.label}
                 </Link>
               ))}
