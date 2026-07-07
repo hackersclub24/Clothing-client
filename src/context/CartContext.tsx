@@ -45,7 +45,7 @@ function reducer(state: CartState, action: CartAction): CartState {
       );
       return {
         ...state,
-        open: true,
+        // do NOT auto-open the cart — only OPEN action does that
         items: exists
           ? state.items.map((i) =>
               key(i.product.id, i.size, i.color) === k

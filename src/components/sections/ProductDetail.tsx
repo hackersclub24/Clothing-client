@@ -126,14 +126,24 @@ export default function ProductDetail({ product }: { product: Product }) {
               </button>
             </div>
             <button onClick={handleAdd}
-              className={`btn-ink flex-1 ${added ? "opacity-70" : ""}`}>
-              {added ? "Added to bag ✓" : "Add to bag"}
+              className={`btn-ink flex-1 transition-all ${added ? "!bg-green-600" : ""}`}>
+              {added ? "Added ✓" : "Add to bag"}
             </button>
             <button className="size-11 rounded-full border border-line grid place-items-center hover:bg-surface"
               aria-label="Wishlist">
               <Heart size={16} strokeWidth={1.25} />
             </button>
           </div>
+
+          {/* View bag — appears only after adding, lets user choose to proceed or keep shopping */}
+          {added && (
+            <button
+              onClick={openCart}
+              className="hidden md:flex mt-2 w-full py-3 border border-line items-center justify-center text-[11px] tracking-[0.2em] uppercase hover:border-ink hover:bg-ink hover:text-background transition-all rounded-sm"
+            >
+              View bag &amp; checkout →
+            </button>
+          )}
 
           {/* WhatsApp — hidden on mobile (use sticky bar instead) */}
           <a href={wa} target="_blank" rel="noopener noreferrer"
