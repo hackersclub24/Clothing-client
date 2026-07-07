@@ -2,10 +2,10 @@ import Link from "next/link";
 
 export default function CategoryBanner() {
   const categories = [
-    { label: "Outerwear", href: "/outerwear", tone: "bg-stone-800 text-stone-100" },
-    { label: "Knitwear", href: "/knitwear", tone: "bg-stone-100 text-stone-800" },
-    { label: "Trousers", href: "/trousers", tone: "bg-amber-50 text-stone-800" },
-    { label: "Accessories", href: "/accessories", tone: "bg-stone-200 text-stone-800" },
+    { label: "Outerwear", href: "/category/outerwear", tone: "bg-stone-800 text-stone-100" },
+    { label: "Knitwear", href: "/category/knitwear", tone: "bg-stone-100 text-stone-800" },
+    { label: "Trousers", href: "/category/trousers", tone: "bg-amber-50 text-stone-800" },
+    { label: "Accessories", href: "/category/accessories", tone: "bg-stone-200 text-stone-800" },
   ];
 
   return (

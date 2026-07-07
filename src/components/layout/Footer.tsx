@@ -10,8 +10,8 @@ export default function Footer() {
   return (
     <footer className="bg-ink text-background/85 mt-32">
       <div className="px-6 md:px-10 pt-24 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-          <div className="md:col-span-5">
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-10 md:gap-12">
+          <div className="col-span-2 md:col-span-5">
             <p className="eyebrow text-background/50">Est. Faridabad 2024</p>
             <h2 className="font-display text-5xl md:text-7xl mt-6 leading-[0.9]">Pacific<br/>Dust.</h2>
             <p className="mt-8 max-w-md text-sm leading-relaxed text-background/70">
@@ -39,7 +39,7 @@ export default function Footer() {
             </div>
           ))}
 
-          <div className="md:col-span-1">
+          <div className="col-span-2 md:col-span-2">
             <p className="eyebrow text-background/50">Social</p>
             <ul className="mt-6 space-y-3 text-sm text-background/80">
               <li>
@@ -64,7 +64,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div aria-hidden className="mt-16 font-display text-[18vw] leading-[0.8] tracking-[-0.05em] text-background/[0.06] select-none">
+        <div aria-hidden className="mt-10 hidden md:block font-display text-[18vw] leading-[0.8] tracking-[-0.05em] text-background/[0.06] select-none">
           PACIFIC DUST
         </div>
       </div>

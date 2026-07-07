@@ -12,7 +12,7 @@ const SIZES = ["XS","S","M","L","XL"];
 
 export default function Shop() {
   const [view, setView] = useState<"grid"|"list">("grid");
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [cat, setCat] = useState("All");
   const filtered = cat === "All" ? all : all.filter(p => p.category === cat);
 
@@ -75,19 +75,17 @@ export default function Shop() {
             ) : (
               <div className="divide-y divide-line">
                 {filtered.map(p => (
-                  <Link key={p.id} href={`/products/${p.slug}`} className="grid grid-cols-[120px_1fr_auto] gap-6 py-6 items-center group">
-                    <div className="relative w-full aspect-square bg-surface overflow-hidden">
+                  <Link key={p.id} href={`/products/${p.slug}`} className="flex items-center gap-4 md:gap-6 py-5 group">
+                    <div className="relative w-[72px] h-[90px] md:w-[120px] md:h-[120px] bg-surface overflow-hidden flex-shrink-0">
                       {p.image && <Image src={p.image} alt={p.name} fill sizes="120px" className="object-cover"/>}
                     </div>
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <p className="eyebrow">{p.category}</p>
-                      <p className="font-display text-2xl mt-2">{p.name}</p>
-                      <p className="text-xs text-ink-muted mt-1">{p.colors.join(" · ")}</p>
+                      <p className="font-display text-lg md:text-2xl mt-1 truncate">{p.name}</p>
+                      <p className="text-xs text-ink-muted mt-1 truncate">{p.colors.join(" · ")}</p>
+                      <div className="text-sm mt-2">₹{p.price.toLocaleString("en-IN")}</div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-sm">₹{p.price.toLocaleString("en-IN")}</div>
-                      <span className="mt-3 inline-block text-[11px] tracking-[0.18em] uppercase link-underline">View →</span>
-                    </div>
+                    <span className="text-[11px] tracking-[0.18em] uppercase link-underline flex-shrink-0">View →</span>
                   </Link>
                 ))}
               </div>

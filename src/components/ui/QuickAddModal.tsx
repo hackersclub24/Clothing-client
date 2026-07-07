@@ -54,7 +54,6 @@ export default function QuickAddModal({ product, onClose }: Props) {
     if (!product) return;
     for (let i = 0; i < qty; i++) addItem(product, size, color);
     setAdded(true);
-    // Show ✓ for 1.2s then reset — modal stays open so user can add more
     setTimeout(() => setAdded(false), 1200);
   };
 
@@ -89,7 +88,6 @@ export default function QuickAddModal({ product, onClose }: Props) {
             exit={{   y: "100%", opacity: 0 }}
             transition={{ duration: 0.4, ease: EASE }}
             style={{ maxHeight: "92vh" }}
-            // On desktop, override the slide-up with a scale-in
           >
             {/* Close */}
             <button
@@ -100,8 +98,119 @@ export default function QuickAddModal({ product, onClose }: Props) {
               <X size={16} strokeWidth={1.5} />
             </button>
 
-            <div className="grid md:grid-cols-2">
-              {/* ── Image ── */}
+            {/* ─────────────────────────────────────────────────────
+                MOBILE: compact header strip + stacked controls
+                All controls visible without scrolling
+            ───────────────────────────────────────────────────── */}
+            <div className="md:hidden">
+              {/* Compact product header */}
+              <div className="flex items-center gap-4 px-5 pt-5 pb-4 border-b border-line">
+                {product.image && (
+                  <div className="relative w-[68px] h-[68px] flex-shrink-0 overflow-hidden rounded-sm bg-surface">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      className="object-cover"
+                      sizes="68px"
+                      priority
+                    />
+                  </div>
+                )}
+                <div className="flex-1 min-w-0 pr-8">
+                  <p className="eyebrow truncate">{product.category}</p>
+                  <h2 className="font-display text-[1.25rem] mt-0.5 leading-tight truncate">{product.name}</h2>
+                  <div className="mt-1 flex items-baseline gap-2">
+                    <span className="text-base font-light">₹{product.price.toLocaleString("en-IN")}</span>
+                    <span className="text-[10px] text-ink-muted">incl. taxes</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Controls */}
+              <div className="px-5 py-4 flex flex-col gap-4">
+                {/* Colour */}
+                <div>
+                  <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.18em] mb-2">
+                    <span>Colour</span>
+                    <span className="text-ink-muted normal-case tracking-normal text-xs">{color}</span>
+                  </div>
+                  <div className="flex gap-2 flex-wrap">
+                    {product.colors.map(c => (
+                      <button key={c} onClick={() => setColor(c)}
+                        className={`px-4 py-1.5 border text-xs rounded-sm transition-all
+                          ${color === c ? "border-ink bg-ink text-background" : "border-line"}`}>
+                        {c}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Size */}
+                <div>
+                  <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.18em] mb-2">
+                    <span>Size</span>
+                    <button className="normal-case tracking-normal text-ink-muted flex items-center gap-1 text-xs">
+                      <Ruler size={11} /> Size guide
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-5 gap-1.5">
+                    {SIZES.map(s => (
+                      <button key={s} onClick={() => setSize(s)}
+                        className={`py-2.5 border text-sm transition-all
+                          ${size === s ? "border-ink bg-ink text-background" : "border-line"}`}>
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Qty row */}
+                <div className="flex items-center gap-3">
+                  <span className="text-[11px] uppercase tracking-[0.18em]">Qty</span>
+                  <div className="flex items-center border border-line rounded-full">
+                    <button onClick={() => setQty(Math.max(1, qty - 1))} className="size-8 grid place-items-center text-ink-muted">
+                      <Minus size={11} />
+                    </button>
+                    <span className="w-5 text-center text-sm">{qty}</span>
+                    <button onClick={() => setQty(qty + 1)} className="size-8 grid place-items-center text-ink-muted">
+                      <Plus size={11} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* CTAs */}
+                <div className="flex flex-col gap-2 pt-1 pb-2">
+                  <button
+                    onClick={handleAdd}
+                    className={`w-full py-3.5 text-[12px] tracking-[0.2em] uppercase rounded-sm flex items-center justify-center gap-2 transition-all duration-300
+                      ${added ? "bg-green-600 text-white" : "bg-ink text-background hover:opacity-80"}`}
+                  >
+                    {added ? <><Check size={13} /> Added — keep shopping</> : "Add to bag"}
+                  </button>
+                  <button
+                    onClick={() => { onClose(); openCart(); }}
+                    className="w-full py-3 text-[11px] tracking-[0.2em] uppercase rounded-sm flex items-center justify-center gap-2 border border-line"
+                  >
+                    View bag & checkout
+                  </button>
+                  <a href={wa} target="_blank" rel="noopener noreferrer"
+                    className="w-full py-3 text-[11px] tracking-[0.2em] uppercase rounded-sm flex items-center justify-center gap-2 bg-[#25D366] text-white">
+                    <MessageCircle size={13} /> Order via WhatsApp
+                  </a>
+                  <Link href={`/products/${product.slug}`} onClick={onClose}
+                    className="text-center text-[10px] tracking-[0.2em] uppercase text-ink-muted hover:text-ink transition-colors pt-1">
+                    View full details →
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* ─────────────────────────────────────────────────────
+                DESKTOP: 2-col — image left, controls right
+            ───────────────────────────────────────────────────── */}
+            <div className="hidden md:grid md:grid-cols-2">
+              {/* Image */}
               <div className="relative aspect-[4/5] bg-surface">
                 {product.image && (
                   <Image
@@ -109,11 +218,10 @@ export default function QuickAddModal({ product, onClose }: Props) {
                     alt={product.name}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 410px"
+                    sizes="410px"
                     priority
                   />
                 )}
-                {/* View full detail link */}
                 <Link
                   href={`/products/${product.slug}`}
                   onClick={onClose}
@@ -123,9 +231,8 @@ export default function QuickAddModal({ product, onClose }: Props) {
                 </Link>
               </div>
 
-              {/* ── Details ── */}
-              <div className="p-7 md:p-10 flex flex-col">
-                {/* Category + name */}
+              {/* Details */}
+              <div className="p-10 flex flex-col">
                 <div>
                   <p className="eyebrow">{product.category} · Collection Brume</p>
                   <h2 className="font-display text-3xl md:text-4xl mt-3 leading-[0.95]">
@@ -145,15 +252,9 @@ export default function QuickAddModal({ product, onClose }: Props) {
                   </div>
                   <div className="flex gap-2 flex-wrap">
                     {product.colors.map(c => (
-                      <button
-                        key={c}
-                        onClick={() => setColor(c)}
+                      <button key={c} onClick={() => setColor(c)}
                         className={`px-4 py-2 border text-xs rounded-sm transition-all
-                          ${color === c
-                            ? "border-ink bg-ink text-background"
-                            : "border-line hover:border-ink"
-                          }`}
-                      >
+                          ${color === c ? "border-ink bg-ink text-background" : "border-line hover:border-ink"}`}>
                         {c}
                       </button>
                     ))}
@@ -170,15 +271,9 @@ export default function QuickAddModal({ product, onClose }: Props) {
                   </div>
                   <div className="grid grid-cols-5 gap-2">
                     {SIZES.map(s => (
-                      <button
-                        key={s}
-                        onClick={() => setSize(s)}
+                      <button key={s} onClick={() => setSize(s)}
                         className={`py-3 border text-sm transition-all
-                          ${size === s
-                            ? "border-ink bg-ink text-background"
-                            : "border-line hover:border-ink"
-                          }`}
-                      >
+                          ${size === s ? "border-ink bg-ink text-background" : "border-line hover:border-ink"}`}>
                         {s}
                       </button>
                     ))}
@@ -201,35 +296,21 @@ export default function QuickAddModal({ product, onClose }: Props) {
 
                 {/* CTAs */}
                 <div className="mt-auto pt-8 flex flex-col gap-3">
-                  {/* Add to bag — stays open after adding */}
                   <button
                     onClick={handleAdd}
                     className={`w-full py-4 text-[12px] tracking-[0.2em] uppercase rounded-sm flex items-center justify-center gap-2 transition-all duration-300
-                      ${added
-                        ? "bg-green-600 text-white scale-[0.98]"
-                        : "bg-ink text-background hover:opacity-80"
-                      }`}
+                      ${added ? "bg-green-600 text-white scale-[0.98]" : "bg-ink text-background hover:opacity-80"}`}
                   >
-                    {added
-                      ? <><Check size={14} /> Added — keep shopping</>
-                      : "Add to bag"
-                    }
+                    {added ? <><Check size={14} /> Added — keep shopping</> : "Add to bag"}
                   </button>
-
-                  {/* View bag — always visible once something is in cart */}
                   <button
                     onClick={() => { onClose(); openCart(); }}
                     className="w-full py-3.5 text-[11px] tracking-[0.2em] uppercase rounded-sm flex items-center justify-center gap-2 border border-line hover:border-ink transition-colors"
                   >
                     View bag & checkout
                   </button>
-
-                  <a
-                    href={wa}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3.5 text-[11px] tracking-[0.2em] uppercase rounded-sm flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20b858] text-white transition-colors"
-                  >
+                  <a href={wa} target="_blank" rel="noopener noreferrer"
+                    className="w-full py-3.5 text-[11px] tracking-[0.2em] uppercase rounded-sm flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20b858] text-white transition-colors">
                     <MessageCircle size={13} /> Order via WhatsApp
                   </a>
                 </div>

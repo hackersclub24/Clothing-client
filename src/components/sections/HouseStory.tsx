@@ -30,7 +30,7 @@ export default function HouseStory() {
               for a decade, not a season.
             </p>
             <Link
-              href="/philosophy"
+              href="/about"
               className="text-[11px] tracking-widest uppercase text-stone-900 underline underline-offset-4 hover:text-stone-500 transition-colors"
             >
               Read our philosophy
@@ -67,7 +67,7 @@ export default function HouseStory() {
                 weeks — from loom to lining to the final press.
               </p>
               <Link
-                href="/atelier"
+                href="/about"
                 className="text-[11px] tracking-widest uppercase text-stone-900 underline underline-offset-4 hover:text-stone-500 transition-colors"
               >
                 Inside the atelier

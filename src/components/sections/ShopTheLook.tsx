@@ -84,7 +84,7 @@ export default function ShopTheLook() {
             </ul>
 
             <Link
-              href="/looks/7"
+              href="/lookbook"
               className="inline-block w-fit text-[11px] tracking-widest uppercase text-stone-900 border border-stone-900 px-8 py-4 hover:bg-stone-900 hover:text-white transition-colors"
             >
               Shop this look

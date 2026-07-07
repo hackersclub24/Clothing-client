@@ -93,6 +93,9 @@ export default function Header() {
           >
             <nav className="px-6 py-6 flex flex-col gap-5">
               {[...NAV,
+                { href: "/search",  label: "Search" },
+                { href: "/account", label: "Account" },
+                { href: "/wishlist", label: "Wishlist" },
                 { href: "/contact", label: "Contact" },
                 { href: "/faq",     label: "FAQ" },
               ].map((l) => (

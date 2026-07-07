@@ -34,9 +34,10 @@ export default function ProductDetail({ product }: { product: Product }) {
   const related  = all.filter(p => p.id !== product.id).slice(0, 4);
 
   return (
-    <main className="pt-32">
+    /* Extra bottom padding on mobile to clear the sticky CTA bar */
+    <main className="pt-24 md:pt-32 pb-24 md:pb-0">
       {/* Breadcrumb */}
-      <div className="px-6 md:px-10 text-xs text-ink-muted tracking-[0.18em] uppercase mb-8">
+      <div className="px-6 md:px-10 text-xs text-ink-muted tracking-[0.18em] uppercase mb-6 md:mb-8">
         <Link href="/shop" className="link-underline">Shop</Link>
         {" / "}
         <Link href={`/category/${product.category.toLowerCase()}`} className="link-underline">
@@ -46,9 +47,9 @@ export default function ProductDetail({ product }: { product: Product }) {
         <span className="text-ink">{product.name}</span>
       </div>
 
-      <div className="grid lg:grid-cols-[1fr_460px] gap-10 px-6 md:px-10">
+      <div className="grid lg:grid-cols-[1fr_460px] gap-8 md:gap-10 px-6 md:px-10">
         {/* ── Gallery ── */}
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-2 md:gap-3">
           {gallery.map((img, i) => (
             <div key={i} className={`bg-surface overflow-hidden group ${i === 0 ? "col-span-2" : ""}`}>
               <div className={`relative ${i === 0 ? "aspect-[4/3]" : "aspect-[4/5]"}`}>
@@ -79,7 +80,7 @@ export default function ProductDetail({ product }: { product: Product }) {
           </p>
 
           {/* Colour */}
-          <div className="mt-10">
+          <div className="mt-8 md:mt-10">
             <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em]">
               <span>Colour</span>
               <span className="text-ink-muted normal-case tracking-normal">{color}</span>
@@ -114,8 +115,8 @@ export default function ProductDetail({ product }: { product: Product }) {
             </div>
           </div>
 
-          {/* Qty + Add */}
-          <div className="mt-8 flex items-stretch gap-3">
+          {/* Qty + Add — hidden on mobile (use sticky bar instead) */}
+          <div className="mt-8 hidden md:flex items-stretch gap-3">
             <div className="flex items-center border border-line rounded-full">
               <button onClick={() => setQty(Math.max(1, qty - 1))} className="size-11 grid place-items-center">
                 <Minus size={14} />
@@ -135,9 +136,9 @@ export default function ProductDetail({ product }: { product: Product }) {
             </button>
           </div>
 
-          {/* WhatsApp */}
+          {/* WhatsApp — hidden on mobile (use sticky bar instead) */}
           <a href={wa} target="_blank" rel="noopener noreferrer"
-            className="mt-3 flex items-center justify-center gap-2 w-full py-3.5 bg-[#25D366] hover:bg-[#20b858] text-white text-[11px] tracking-[0.2em] uppercase rounded-full transition-colors">
+            className="mt-3 hidden md:flex items-center justify-center gap-2 w-full py-3.5 bg-[#25D366] hover:bg-[#20b858] text-white text-[11px] tracking-[0.2em] uppercase rounded-full transition-colors">
             <MessageCircle size={14} /> Order via WhatsApp
           </a>
 
@@ -164,6 +165,31 @@ export default function ProductDetail({ product }: { product: Product }) {
             ))}
           </div>
         </aside>
+      </div>
+
+      {/* ── Sticky mobile CTA bar ── */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-t border-line px-4 py-3 flex items-center gap-3">
+        {/* Qty controls */}
+        <div className="flex items-center border border-line rounded-full">
+          <button onClick={() => setQty(Math.max(1, qty - 1))} className="size-10 grid place-items-center">
+            <Minus size={13} />
+          </button>
+          <span className="w-5 text-center text-sm">{qty}</span>
+          <button onClick={() => setQty(qty + 1)} className="size-10 grid place-items-center">
+            <Plus size={13} />
+          </button>
+        </div>
+        {/* Add to bag */}
+        <button onClick={handleAdd}
+          className={`btn-ink flex-1 !py-3 text-[11px] ${added ? "opacity-70" : ""}`}>
+          {added ? "Added ✓" : "Add to bag"}
+        </button>
+        {/* WhatsApp */}
+        <a href={wa} target="_blank" rel="noopener noreferrer"
+          className="size-10 rounded-full bg-[#25D366] grid place-items-center flex-shrink-0"
+          aria-label="Order via WhatsApp">
+          <MessageCircle size={16} color="white" />
+        </a>
       </div>
 
       {/* Reviews */}

@@ -19,7 +19,7 @@ export default function NewArrivals() {
             </h2>
           </div>
           <Link
-            href="/new-arrivals"
+            href="/shop"
             className="text-[11px] tracking-widest uppercase text-stone-500 hover:text-stone-900 transition-colors underline-offset-4 hover:underline shrink-0"
           >
             All new →

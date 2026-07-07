@@ -26,7 +26,7 @@ export default function CampaignBanner() {
             &ldquo;Silence is the last luxury.&rdquo;
           </blockquote>
           <Link
-            href="/campaign"
+            href="/collections"
             className="inline-block mt-9 text-[11px] tracking-widest uppercase text-white border border-white/60 px-8 py-3.5 hover:bg-white hover:text-stone-900 transition-colors"
           >
             View campaign

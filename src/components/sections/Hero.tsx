@@ -16,9 +16,21 @@ import KangarooSilhouette from "@/components/ui/KangarooSilhouette";
 const CHROME = "calc(var(--announcement-h) + var(--header-h))";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check, { passive: true });
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
+
 export default function Hero() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const heroRef    = useRef<HTMLDivElement>(null);
+  const isMobile   = useIsMobile();
 
   /* ── Mouse (−1 → +1) ───────────────────────────────────────── */
   const mouseX = useMotionValue(0);
@@ -57,6 +69,144 @@ export default function Hero() {
   const kangMX = useSpring(useTransform(mouseX,[-1,1],["-1.5%","1.5%"]), { stiffness:28, damping:20 });
   const pacMX  = useSpring(useTransform(mouseX,[-1,1],["0.8%","-0.8%"]),{ stiffness:22, damping:20 });
 
+  /* ─────────────────────────────────────────────────────────────
+     MOBILE LAYOUT — natural-flow, no absolute positioning
+  ───────────────────────────────────────────────────────────── */
+  if (isMobile) {
+    return (
+      <div
+        ref={sectionRef}
+        className="relative w-full overflow-hidden hero-grain flex flex-col"
+        style={{
+          minHeight: "100dvh",
+          backgroundColor: "#E8E2D0",
+        }}
+      >
+        {/* Background gradient */}
+        <div aria-hidden className="absolute inset-0 pointer-events-none" style={{
+          background: "radial-gradient(ellipse 100% 90% at 52% 45%, #F0EAD8 0%, #E8E2D0 45%, #D8D0BC 100%)"
+        }} />
+
+        {/* Top text block */}
+        <motion.div
+          className="relative z-10 pt-28 px-6 flex flex-col gap-3"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: EASE, delay: 0.3 }}
+        >
+          <p className="text-[10px] tracking-[0.35em] uppercase text-stone-500">
+            Drop 01 — Autumn / Winter 2026
+          </p>
+          <h1
+            className="leading-none text-stone-800"
+            style={{
+              fontFamily: "var(--font-playfair)",
+              fontSize: "clamp(3.2rem, 16vw, 5rem)",
+              fontWeight: 400,
+              fontStyle: "italic",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            Pacific<br />
+            <span className="not-italic font-light" style={{ color: "#C9A84C" }}>Dust.</span>
+          </h1>
+          <p className="text-[12px] text-stone-600 leading-relaxed font-light max-w-[220px]">
+            Cut from 320 gsm brushed cotton.<br />
+            Drop shoulder. Hand-finished seams.
+          </p>
+        </motion.div>
+
+        {/* 3D Shirt — centered, contained */}
+        <motion.div
+          className="relative z-10 w-full flex-1"
+          style={{ minHeight: 320, maxHeight: 440 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: EASE, delay: 0.5 }}
+        >
+          {/* Kangaroo silhouette — behind shirt */}
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none select-none"
+            style={{ zIndex: 1 }}
+          >
+            <KangarooSilhouette opacity={0.3} width="100%" height="100%" />
+          </div>
+
+          {/* Shirt */}
+          <motion.div
+            className="absolute inset-0"
+            style={{ zIndex: 2, y: shirtY, scale: shirtSc }}
+          >
+            <TShirtSceneLoader mouse={mouse} />
+          </motion.div>
+
+          {/* "Dust" gold word — mobile position */}
+          <motion.div
+            aria-hidden
+            className="absolute bottom-4 right-4 pointer-events-none select-none"
+            style={{ zIndex: 3 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, ease: EASE, delay: 0.9 }}
+          >
+            <span style={{
+              fontFamily: "var(--font-playfair)",
+              fontSize: "clamp(1.8rem, 8vw, 3rem)",
+              fontWeight: 400,
+              fontStyle: "italic",
+              color: "#C9A84C",
+              letterSpacing: "0.12em",
+              opacity: 0.85,
+            }}>
+              Dust
+            </span>
+          </motion.div>
+        </motion.div>
+
+        {/* CTA + drop counter row */}
+        <motion.div
+          className="relative z-10 px-6 pb-10 pt-4 flex items-center justify-between gap-4"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: EASE, delay: 0.8 }}
+        >
+          <Link
+            href="/collections"
+            className="cta-btn inline-flex items-center gap-3 border border-stone-500/60 text-stone-700 text-[10px] tracking-[0.22em] uppercase font-light px-6 py-3.5 rounded-full"
+          >
+            Explore
+            <ArrowRight size={10} className="cta-arrow" />
+          </Link>
+
+          <div className="text-right">
+            <p className="text-[8px] tracking-[0.25em] uppercase text-stone-400/80 font-light">
+              Drop 01 — AW
+            </p>
+            <p style={{ fontFamily: "var(--font-playfair)" }} className="leading-none">
+              <span className="text-[1.4rem] font-light text-stone-700 italic">/026</span>
+              <span className="text-[1rem] font-light text-stone-300">/500</span>
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Bottom fade */}
+        <motion.div
+          aria-hidden
+          className="absolute bottom-0 left-0 right-0 pointer-events-none"
+          style={{
+            height: "80px", zIndex: 15,
+            opacity: bottomOp,
+            background: "linear-gradient(to top, rgba(232,226,208,0.8), transparent)",
+          }}
+        />
+      </div>
+    );
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     DESKTOP LAYOUT — original cinematic absolute-positioned
+  ───────────────────────────────────────────────────────────── */
   return (
     <div
       ref={sectionRef}
@@ -64,63 +214,43 @@ export default function Hero() {
       style={{
         height: `calc(100dvh - ${CHROME})`,
         minHeight: 600,
-        /* Exact background from reference image */
         backgroundColor: "#E8E2D0",
       }}
     >
-      {/* ── Radial gradient — lighter center, darker edges ── */}
+      {/* ── Radial gradient ── */}
       <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ zIndex:0,
         background: "radial-gradient(ellipse 100% 90% at 52% 45%, #F0EAD8 0%, #E8E2D0 45%, #D8D0BC 100%)" }} />
 
-      {/* ── Sunbeam shadow — CSS, from top-left ─────────────── */}
+      {/* ── Sunbeam shadows ── */}
       <div aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex:1 }}>
         <div className="sunbeam" style={{ left:"-8%",  top:"-10%", opacity:0.10, animationDelay:"0s"   }} />
         <div className="sunbeam" style={{ left:"-2%",  top:"-10%", opacity:0.07, animationDelay:"1.8s" }} />
         <div className="sunbeam" style={{ left:" 5%",  top:"-10%", opacity:0.05, animationDelay:"3.2s" }} />
       </div>
 
-      {/* ── Vignette ─────────────────────────────────────────── */}
+      {/* ── Vignette ── */}
       <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ zIndex:2,
         background:"radial-gradient(ellipse 90% 88% at 50% 48%, transparent 38%, rgba(200,192,170,0.45) 100%)" }} />
 
-      {/* ── Mouse-tracking inner container ──────────────────── */}
+      {/* ── Mouse-tracking inner container ── */}
       <div ref={heroRef} className="absolute inset-0" style={{ zIndex:3 }}>
 
-        {/* ─────────────────────────────────────────────────────
-            LAYER 1 — Kangaroo silhouette
-            HUGE — nearly full hero height, centered behind shirt.
-            Reference: kangaroo spans from top-5% to bottom-5%,
-            horizontally from ~15% to ~65% of hero width.
-        ───────────────────────────────────────────────────── */}
+        {/* LAYER 1 — Kangaroo silhouette */}
         <motion.div
           aria-hidden
           className="absolute pointer-events-none select-none"
           style={{
-            top: "-2%",
-            left: "12%",
-            width: "52%",
-            height: "104%",
-            x: kangMX,
-            y: kangY,
-            zIndex: 4,
+            top: "-2%", left: "12%", width: "52%", height: "104%",
+            x: kangMX, y: kangY, zIndex: 4,
           }}
           initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.8, ease: EASE, delay: 0.5 }}
         >
-          <KangarooSilhouette
-            opacity={0.55}
-            width="100%"
-            height="100%"
-          />
+          <KangarooSilhouette opacity={0.55} width="100%" height="100%" />
         </motion.div>
 
-        {/* ─────────────────────────────────────────────────────
-            LAYER 2 — "pacific" oversized split typography
-            "pac" from left edge, "ific" to right edge
-            Both at z-index 5 (above kangaroo, below shirt)
-            Vertically centered in the hero
-        ───────────────────────────────────────────────────── */}
+        {/* LAYER 2 — "pacific" split typography */}
         <motion.div
           aria-hidden
           className="absolute inset-0 flex items-center pointer-events-none select-none overflow-hidden"
@@ -129,83 +259,47 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.4, ease: EASE, delay: 0.3 }}
         >
-          {/* "pac" — anchored to left, slight bleed */}
-          <span
-            className="absolute"
-            style={{
-              fontFamily: "var(--font-playfair)",
-              fontSize: "clamp(8rem, 20vw, 20rem)",
-              fontWeight: 700,
-              fontStyle: "italic",
-              color: "rgba(255,255,255,0.28)",
-              lineHeight: 1,
-              left: "-1vw",
-              top: "50%",
-              transform: "translateY(-50%)",
-              letterSpacing: "-0.02em",
-              whiteSpace: "nowrap",
-            }}
-          >
-            pac
-          </span>
-          {/* "ific" — anchored to right, slight bleed */}
-          <span
-            className="absolute"
-            style={{
-              fontFamily: "var(--font-playfair)",
-              fontSize: "clamp(8rem, 20vw, 20rem)",
-              fontWeight: 700,
-              fontStyle: "italic",
-              color: "rgba(255,255,255,0.28)",
-              lineHeight: 1,
-              right: "-1vw",
-              top: "50%",
-              transform: "translateY(-50%)",
-              letterSpacing: "-0.02em",
-              whiteSpace: "nowrap",
-            }}
-          >
-            ific
-          </span>
+          <span className="absolute" style={{
+            fontFamily: "var(--font-playfair)",
+            fontSize: "clamp(8rem, 20vw, 20rem)",
+            fontWeight: 700, fontStyle: "italic",
+            color: "rgba(255,255,255,0.28)",
+            lineHeight: 1, left: "-1vw", top: "50%",
+            transform: "translateY(-50%)",
+            letterSpacing: "-0.02em", whiteSpace: "nowrap",
+          }}>pac</span>
+          <span className="absolute" style={{
+            fontFamily: "var(--font-playfair)",
+            fontSize: "clamp(8rem, 20vw, 20rem)",
+            fontWeight: 700, fontStyle: "italic",
+            color: "rgba(255,255,255,0.28)",
+            lineHeight: 1, right: "-1vw", top: "50%",
+            transform: "translateY(-50%)",
+            letterSpacing: "-0.02em", whiteSpace: "nowrap",
+          }}>ific</span>
         </motion.div>
 
-        {/* ─────────────────────────────────────────────────────
-            LAYER 3 — T-Shirt (highest z, center-stage)
-            Positioned: left 15% → right 5%, overflows top/bottom
-            This sits above kangaroo and "pacific" text
-        ───────────────────────────────────────────────────── */}
+        {/* LAYER 3 — T-Shirt */}
         <motion.div
           className="absolute"
-          style={{
-            top: "-8%", bottom: "-8%",
-            left: "14%", right: "4%",
-            zIndex: 10,
-          }}
+          style={{ top: "-8%", bottom: "-8%", left: "14%", right: "4%", zIndex: 10 }}
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.6, ease: EASE, delay: 0.65 }}
         >
-          <motion.div
-            className="w-full h-full"
-            style={{ y: shirtY, scale: shirtSc }}
-          >
+          <motion.div className="w-full h-full" style={{ y: shirtY, scale: shirtSc }}>
             <TShirtSceneLoader mouse={mouse} />
           </motion.div>
         </motion.div>
 
-        {/* ── Floor shadow beneath shirt ──────────────────── */}
+        {/* Floor shadow */}
         <div aria-hidden className="absolute pointer-events-none" style={{
-          bottom: "5%", left: "22%", right: "8%",
-          height: "5%", zIndex: 9,
+          bottom: "5%", left: "22%", right: "8%", height: "5%", zIndex: 9,
           background: "radial-gradient(ellipse 55% 100% at 50% 0%, rgba(150,130,90,0.32) 0%, transparent 100%)",
           filter: "blur(16px)",
         }} />
 
-        {/* ─────────────────────────────────────────────────────
-            TEXT LAYER — all UI elements above shirt
-        ───────────────────────────────────────────────────── */}
-
-        {/* Left editorial block — top-left quadrant */}
+        {/* Left editorial block */}
         <motion.div
           className="absolute flex flex-col gap-5"
           style={{ top: "28%", left: "4%", maxWidth: 220, zIndex: 20 }}
@@ -239,7 +333,7 @@ export default function Hero() {
           </Link>
         </motion.div>
 
-        {/* "Dust" gold italic — bottom right, large with tracking */}
+        {/* "Dust" gold italic */}
         <motion.div
           aria-hidden
           className="absolute pointer-events-none select-none"
@@ -251,17 +345,12 @@ export default function Hero() {
           <span style={{
             fontFamily: "var(--font-playfair)",
             fontSize: "clamp(2.8rem, 5.5vw, 6rem)",
-            fontWeight: 400,
-            fontStyle: "italic",
-            color: "#C9A84C",
-            letterSpacing: "0.18em",
-            opacity: 0.9,
-          }}>
-            Dust
-          </span>
+            fontWeight: 400, fontStyle: "italic",
+            color: "#C9A84C", letterSpacing: "0.18em", opacity: 0.9,
+          }}>Dust</span>
         </motion.div>
 
-        {/* Drop counter — bottom right corner */}
+        {/* Drop counter */}
         <motion.div
           className="absolute text-right"
           style={{ bottom: "6%", right: "5%", zIndex: 20 }}
@@ -278,7 +367,7 @@ export default function Hero() {
           </p>
         </motion.div>
 
-        {/* Scroll indicator — far right, vertical */}
+        {/* Scroll indicator */}
         <motion.div
           className="absolute hidden md:flex flex-col items-center gap-2"
           style={{ right: "1.2%", top: "50%", transform: "translateY(-50%)", zIndex: 20 }}
@@ -293,9 +382,7 @@ export default function Hero() {
             textTransform: "uppercase",
             color: "rgba(120,110,90,0.6)",
             fontWeight: 300,
-          }}>
-            Scroll to Discover
-          </span>
+          }}>Scroll to Discover</span>
           <motion.div
             style={{ width: 1, background: "rgba(180,165,130,0.5)" }}
             initial={{ height: 0 }}
@@ -305,7 +392,7 @@ export default function Hero() {
           <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#C9A84C" }} />
         </motion.div>
 
-        {/* Bottom gradient fade on scroll */}
+        {/* Bottom gradient fade */}
         <motion.div
           aria-hidden
           className="absolute bottom-0 left-0 right-0 pointer-events-none"
